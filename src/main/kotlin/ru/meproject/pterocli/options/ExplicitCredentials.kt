@@ -1,4 +1,4 @@
-package ru.meproject.pterocli
+package ru.meproject.pterocli.options
 
 import com.github.ajalt.clikt.parameters.groups.OptionGroup
 import com.github.ajalt.clikt.parameters.options.help

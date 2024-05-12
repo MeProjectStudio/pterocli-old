@@ -3,8 +3,10 @@ val shade: Configuration by configurations.creating
 
 plugins {
     java
+    application
     kotlin("jvm") version "1.9.23"
     kotlin("plugin.serialization") version "1.9.23"
+    id("org.graalvm.buildtools.native") version "0.10.1"
 }
 
 group = "ru.meproject"
@@ -21,9 +23,11 @@ configurations {
 }
 
 dependencies {
+
     testImplementation(kotlin("test"))
     shade("com.github.ajalt.clikt:clikt:4.4.0")
     shade("com.mattmalec:Pterodactyl4J:2.BETA_141")
+    shade("org.slf4j:slf4j-nop:1.7.32")
     shade("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
 }
 
@@ -31,7 +35,7 @@ tasks.test {
     useJUnitPlatform()
 }
 kotlin {
-    jvmToolchain(17)
+    jvmToolchain(21)
 }
 
 
@@ -42,10 +46,33 @@ tasks.withType<Jar> {
             if (it.isDirectory) it else zipTree(it)
         }
     )
+}
 
+application {
+    mainClass = "ru.meproject.pterocli.PterocliKt"
+}
+
+java {
     manifest {
         attributes(
             "Main-Class" to "ru.meproject.pterocli.PterocliKt"
         )
+    }
+}
+
+graalvmNative {
+    metadataRepository {
+        enabled.set(true)
+    }
+    agent {
+        metadataCopy {
+            outputDirectories.add("src/main/resources/META-INF/native-image")
+            mergeWithExisting.set(true)
+        }
+    }
+    binaries {
+        named("main") {
+            mainClass = "ru.meproject.pterocli.PterocliKt"
+        }
     }
 }
