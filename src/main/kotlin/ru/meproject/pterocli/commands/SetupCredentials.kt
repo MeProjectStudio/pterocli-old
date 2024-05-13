@@ -25,7 +25,7 @@ class SetupCredentials: CliktCommand(
 
     override fun run() {
         if (clientApiKey == null && adminApiKey == null) {
-            throw PrintMessage("At least one api key either Client or Application needs to be specified")
+            throw PrintMessage("At least one api key either Client or Application needs to be specified", statusCode = 1)
         }
         val existingCredentials = CredentialsStore.loadCredentials()
         val updatedCredentials = existingCredentials ?: Credentials(panelUrl, null, null)
@@ -48,7 +48,7 @@ class SetupCredentials: CliktCommand(
         try {
             api.retrieveAccount().execute()
         } catch (e: Exception) {
-            throw PrintMessage("There seems to be an issue with Client key specified\n${e.message}")
+            throw PrintMessage("There seems to be an issue with Client key specified", statusCode = 1)
         }
     }
 
@@ -57,7 +57,7 @@ class SetupCredentials: CliktCommand(
         try {
             api.retrieveServers().execute()
         } catch (e: Exception) {
-            throw PrintMessage("There seems to be an issue with Application key specified\n${e.message}")
+            throw PrintMessage("There seems to be an issue with Application key specified", statusCode = 1)
         }
     }
 }

@@ -15,7 +15,8 @@ import ru.meproject.pterocli.commands.client.files.DownloadFileCommand
 import ru.meproject.pterocli.commands.client.files.FilesParentCommand
 import ru.meproject.pterocli.commands.client.files.RemoveFileCommand
 import ru.meproject.pterocli.commands.client.files.UploadFileCommand
-import ru.meproject.pterocli.options.ExplicitCredentials
+import ru.meproject.pterocli.options.AdminExplicitCredentials
+import ru.meproject.pterocli.options.ClientExplicitCredentials
 
 fun main(args: Array<String>) = Pterocli()
     .subcommands(
@@ -47,15 +48,15 @@ class Pterocli : CliktCommand(allowMultipleSubcommands = true) {
     }
 }
 
-class ClientParentCommand: CliktCommand(name = "client", allowMultipleSubcommands = true) {
-    private val credentials by ExplicitCredentials()
+class ClientParentCommand: CliktCommand(name = "client") {
+    private val credentials by ClientExplicitCredentials()
     override fun run() {
         currentContext.obj = PteroBuilder.createClient(credentials.panelUrl, credentials.apiKey)
     }
 }
 
-class ApplicationParentCommand : CliktCommand(name = "admin", allowMultipleSubcommands = true) {
-    private val credentials by ExplicitCredentials()
+class ApplicationParentCommand : CliktCommand(name = "admin") {
+    private val credentials by AdminExplicitCredentials()
     override fun run() {
         currentContext.obj = PteroBuilder.createApplication(credentials.panelUrl, credentials.apiKey)
     }

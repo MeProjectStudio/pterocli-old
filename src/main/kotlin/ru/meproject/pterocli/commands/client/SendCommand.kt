@@ -19,11 +19,9 @@ class SendCommand: CliktCommand(
     override fun run() {
         for (server in servers.ids) {
             api.retrieveServerByIdentifier(server)
-                .flatMap {
-                    echo("Sending console command \"$serverCommand\" to server $server")
-                    it.sendCommand(serverCommand)
-                }
+                .flatMap { it.sendCommand(serverCommand) }
                 .execute()
+            echo("Sending console command \"$serverCommand\" to server $server")
         }
     }
 }

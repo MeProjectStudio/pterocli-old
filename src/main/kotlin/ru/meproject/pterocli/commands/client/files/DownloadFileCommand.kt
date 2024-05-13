@@ -7,6 +7,8 @@ import com.github.ajalt.clikt.parameters.arguments.help
 import com.github.ajalt.clikt.parameters.groups.provideDelegate
 import com.mattmalec.pterodactyl4j.client.entities.PteroClient
 import ru.meproject.pterocli.options.ServerIds
+import java.io.File
+import java.util.concurrent.CompletableFuture
 import kotlin.jvm.optionals.getOrNull
 
 class DownloadFileCommand: CliktCommand(
@@ -26,14 +28,15 @@ class DownloadFileCommand: CliktCommand(
                     .flatMap { it.retrieveDirectory(extracted.first) }
                     .map { it.getFileByName(extracted.second) }
                     .execute()
-                    .getOrNull()
 
-                dir?.let {
-                    dir.retrieveDownload()
-                        .map { it.downloadToFile(extracted.second) }
-                        .execute()
+                dir.ifPresent {
+                    it.retrieveDownload().map { f ->
+                        f.downloadToFile()
+                    }
+                    echo("Downloaded $remotePath from $server")
                 }
             }
+
         }
     }
 
@@ -50,7 +53,7 @@ class DownloadFileCommand: CliktCommand(
 
     private fun checkIfRemoteIsFile(remoteFilePath: String, pServer: String): Boolean {
         return api.retrieveServerByIdentifier(pServer)
-            .flatMap { it.retrieveDirectory() }
+            .flatMap { it.retrieveDirectory(remoteFilePath) }
             .map { it.isFile }
             .execute()
     }

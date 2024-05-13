@@ -43,3 +43,4 @@ bin/
 
 ### pterocli ###
 credentials.json
+initenv.ps1

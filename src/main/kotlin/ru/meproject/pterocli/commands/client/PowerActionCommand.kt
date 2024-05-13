@@ -22,11 +22,9 @@ class PowerActionCommand : CliktCommand(
     override fun run() {
         for (server in servers.ids) {
             api.retrieveServerByIdentifier(server)
-                .flatMap { clientServer ->
-                    echo("Sending power action $action to server $server")
-                    clientServer.setPower(action)
-                }
+                .flatMap { it.setPower(action) }
                 .execute()
+            echo("Sending power action $action to server $server")
         }
     }
 }
