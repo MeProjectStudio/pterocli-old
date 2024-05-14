@@ -7,6 +7,7 @@ import com.github.ajalt.clikt.parameters.arguments.help
 import com.github.ajalt.clikt.parameters.arguments.multiple
 import com.github.ajalt.clikt.parameters.groups.provideDelegate
 import com.mattmalec.pterodactyl4j.client.entities.PteroClient
+import ru.meproject.pterocli.commands.client.files.FilesParentCommand.Companion.extractParentDirectory
 import ru.meproject.pterocli.options.ServerIds
 
 class RemoveFileCommand: CliktCommand(
@@ -20,13 +21,16 @@ class RemoveFileCommand: CliktCommand(
     override fun run() {
         for (server in servers.ids) {
             for (remotePath in paths) {
-                api.retrieveServerByIdentifier(server)
-                    .flatMap { it.retrieveDirectory() }
-                    .flatMap {
-                        echo("Deleting file/directory ${it.name} on server $server")
-                        it.deleteFiles()
-                    }
+                val extracted = extractParentDirectory(remotePath)
+                val file = api.retrieveServerByIdentifier(server)
+                    .flatMap { it.retrieveDirectory(extracted.first) }
+                    .map { it.getFileByName(extracted.second) }
                     .execute()
+                api.retrieveServerByIdentifier(server)
+                    .flatMap { it.retrieveDirectory(extracted.first) }
+                    .flatMap { it.deleteFiles().addFile(file.get()) }
+                    .execute()
+                echo("Deleting file/directory $remotePath on server $server")
             }
         }
     }

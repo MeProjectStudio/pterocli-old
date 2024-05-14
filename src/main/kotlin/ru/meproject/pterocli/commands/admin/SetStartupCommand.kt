@@ -9,30 +9,32 @@ import com.github.ajalt.clikt.parameters.groups.provideDelegate
 import com.github.ajalt.mordant.terminal.Terminal
 import com.github.ajalt.mordant.terminal.YesNoPrompt
 import com.mattmalec.pterodactyl4j.application.entities.PteroApplication
+import ru.meproject.pterocli.options.AdminServerIds
 import ru.meproject.pterocli.options.ConfirmationSilencer
-import ru.meproject.pterocli.options.ServerIds
-import ru.meproject.pterocli.updateStartupConfirmation
 
-class UpdateStartupCommand: CliktCommand(
-    name = "updatestartup",
+class SetStartupCommand: CliktCommand(
+    name = "setstartup",
     help = "Update startup command on a server"
 ) {
     private val api by requireObject<PteroApplication>()
-    private val servers by ServerIds()
+    private val servers by AdminServerIds()
     private val startupCommand by argument().help("New startup command to be set on a server")
     private val confirm by ConfirmationSilencer()
 
     override fun run() {
         for (server in servers.ids) {
-            if (confirm.shouldBeSilent == true || askStartupCommandConfirmation(server, terminal) == true) {
+            if (confirm.shouldBeSilent || askStartupCommandConfirmation(server, terminal) == true) {
                 api.retrieveServerById(server)
                     .flatMap { it.startupManager.setStartupCommand(startupCommand) }
                     .execute()
+                echo("Successfully set \"$startupCommand\" to a server $server")
             }
         }
     }
 
-    private fun askStartupCommandConfirmation(pServer: String, terminal: Terminal): Boolean? {
+    private fun askStartupCommandConfirmation(pServer: Long, terminal: Terminal): Boolean? {
         return YesNoPrompt(updateStartupConfirmation(pServer), terminal).ask()
     }
+
+    private fun updateStartupConfirmation(pServer: Long) = "You sure you want to change startup command on server $pServer?"
 }

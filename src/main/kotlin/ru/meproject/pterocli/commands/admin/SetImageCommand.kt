@@ -9,30 +9,32 @@ import com.github.ajalt.clikt.parameters.groups.provideDelegate
 import com.github.ajalt.mordant.terminal.Terminal
 import com.github.ajalt.mordant.terminal.YesNoPrompt
 import com.mattmalec.pterodactyl4j.application.entities.PteroApplication
+import ru.meproject.pterocli.options.AdminServerIds
 import ru.meproject.pterocli.options.ConfirmationSilencer
-import ru.meproject.pterocli.options.ServerIds
-import ru.meproject.pterocli.updateStartupConfirmation
 
-class UpdateImageCommand: CliktCommand(
-    name = "updateimage",
+class SetImageCommand: CliktCommand(
+    name = "setimage",
     help = "Updates docker image to be used for a server"
 ) {
     private val api by requireObject<PteroApplication>()
-    private val servers by ServerIds()
+    private val servers by AdminServerIds()
     private val containerUrl by argument().help("Container to be used in docker format (e.g. java:jdk17)")
     private val confirm by ConfirmationSilencer()
 
     override fun run() {
         for (server in servers.ids) {
-            if (confirm.shouldBeSilent == true || askImageUpdateConfirmation(server, terminal) == true) {
+            if (confirm.shouldBeSilent || askImageUpdateConfirmation(server, terminal) == true) {
                 api.retrieveServerById(server)
                     .flatMap { it.startupManager.setImage(containerUrl) }
                     .execute()
+                echo("Successfully set \"$containerUrl\" to a server $server")
             }
         }
     }
 
-    private fun askImageUpdateConfirmation(pServer: String, terminal: Terminal): Boolean? {
-        return YesNoPrompt(updateStartupConfirmation(pServer), terminal).ask()
+    private fun askImageUpdateConfirmation(pServer: Long, terminal: Terminal): Boolean? {
+        return YesNoPrompt(updateContainerConfirmation(pServer), terminal).ask()
     }
+
+    private fun updateContainerConfirmation(pServer: Long) = "You sure you want to change container on server $pServer?"
 }

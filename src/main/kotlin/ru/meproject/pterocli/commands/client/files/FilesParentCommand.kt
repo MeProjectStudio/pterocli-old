@@ -10,4 +10,17 @@ class FilesParentCommand: CliktCommand(
     override fun run() {
         // nothing
     }
+
+    companion object {
+        fun extractParentDirectory(remoteFilePath: String): Pair<String, String> {
+            val components = remoteFilePath.split('/')
+            return if (components.size >= 2) {
+                val parentDir = components.dropLast(1).joinToString("/")
+                val file = components.last()
+                return parentDir to file
+            } else {
+                remoteFilePath to ""
+            }
+        }
+    }
 }

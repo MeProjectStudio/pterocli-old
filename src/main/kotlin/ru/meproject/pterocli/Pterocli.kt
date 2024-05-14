@@ -7,8 +7,8 @@ import com.mattmalec.pterodactyl4j.PteroBuilder
 import ru.meproject.pterocli.commands.SetupCredentials
 import ru.meproject.pterocli.commands.admin.GetImageCommand
 import ru.meproject.pterocli.commands.admin.GetStartupCommand
-import ru.meproject.pterocli.commands.admin.UpdateImageCommand
-import ru.meproject.pterocli.commands.admin.UpdateStartupCommand
+import ru.meproject.pterocli.commands.admin.SetImageCommand
+import ru.meproject.pterocli.commands.admin.SetStartupCommand
 import ru.meproject.pterocli.commands.client.PowerActionCommand
 import ru.meproject.pterocli.commands.client.SendCommand
 import ru.meproject.pterocli.commands.client.files.DownloadFileCommand
@@ -35,9 +35,9 @@ fun main(args: Array<String>) = Pterocli()
         ApplicationParentCommand()
             .subcommands(
                 GetStartupCommand(),
-                UpdateStartupCommand(),
+                SetStartupCommand(),
                 GetImageCommand(),
-                UpdateImageCommand()
+                SetImageCommand()
             )
     )
     .main(args)
