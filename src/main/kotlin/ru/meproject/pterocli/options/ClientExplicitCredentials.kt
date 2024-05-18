@@ -8,9 +8,9 @@ import ru.meproject.pterocli.CredentialsStore
 
 class ClientExplicitCredentials: OptionGroup() {
     val panelUrl: String by option("--url", "-u")
-        .defaultLazy { CredentialsStore.loadCredentials()?.panelURL!! }
+        .defaultLazy { CredentialsStore.loadCredentials().panelURL }
         .help("Pterodactyl Instance URL")
     val apiKey: String by option("--api-key", "-a")
-        .defaultLazy { CredentialsStore.loadCredentials()?.clientApiKey!! }
+        .defaultLazy { CredentialsStore.loadCredentials().clientApiKey ?: "clientapikey" }
         .help("Client API key for an Instance")
 }

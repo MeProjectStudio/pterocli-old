@@ -1,5 +1,6 @@
 package ru.meproject.pterocli
 
+import com.github.ajalt.clikt.core.PrintMessage
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -15,9 +16,9 @@ object CredentialsStore {
         File(CREDENTIALS_FILE_PATH).writeText(base64)
     }
 
-    fun loadCredentials(): Credentials? {
+    fun loadCredentials(): Credentials {
         if (!File(CREDENTIALS_FILE_PATH).exists()) {
-            return null
+            throw PrintMessage("No credentials file found", statusCode = 0)
         }
 
         val base64 = File(CREDENTIALS_FILE_PATH).readText()
