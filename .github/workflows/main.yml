@@ -25,18 +25,10 @@ jobs:
           components: 'native-image'
           github-token: ${{ secrets.GITHUB_TOKEN }}
           native-image-musl: true
-        
-      - name: Collect data with native agent through tests
-        env:
-          PANEL_URL: ${{ secrets.PANEL_URL }}
-          ADMIN_KEY: ${{ secrets.ADMIN_KEY }}
-          CLIENT_KEY: ${{ secrets.CLIENT_KEY }}
-        run: |
-          ./gradlew test -Pagent
 
       - name: Build with GraalVM
         run: |
-          ./gradlew nativeBuild -PgradleDebug=false
+          ./gradlew nativeCompile
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
