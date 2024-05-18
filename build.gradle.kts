@@ -1,3 +1,4 @@
+import org.graalvm.buildtools.gradle.tasks.MetadataCopyTask
 
 val shade: Configuration by configurations.creating
 
@@ -61,13 +62,14 @@ java {
 }
 
 graalvmNative {
+    testSupport = false
     metadataRepository {
-        enabled.set(true)
+        enabled = true
     }
     agent {
         metadataCopy {
             outputDirectories.add("src/main/resources/META-INF/native-image")
-            mergeWithExisting.set(true)
+            mergeWithExisting = true
         }
     }
     binaries {

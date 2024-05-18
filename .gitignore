@@ -44,3 +44,6 @@ bin/
 ### pterocli ###
 credentials.json
 initenv.ps1
+out.yml
+config.yml
+test.txt
