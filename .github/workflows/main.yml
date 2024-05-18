@@ -32,7 +32,7 @@ jobs:
           ADMIN_KEY: ${{ secrets.ADMIN_KEY }}
           CLIENT_KEY: ${{ secrets.CLIENT_KEY }}
         run: |
-          ./gradelew test -Pagent
+          ./gradlew test -Pagent
 
       - name: Build with GraalVM
         run: |
@@ -43,8 +43,8 @@ jobs:
         with:
           name: pteroctl-${{ matrix.os }}
           path: |
-            build/native/nativeBuild/pterocli
-            build/native/nativeBuild/pterocli.exe
+            build/native/nativeCompile/pterocli
+            build/native/nativeCompile/pterocli.exe
 
   release:
     name: Create pteroctl release
