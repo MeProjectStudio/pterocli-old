@@ -11,7 +11,7 @@ plugins {
 }
 
 group = "ru.meproject"
-version = "1.0.0-RC.6"
+version = "1.0.0-RC.7"
 
 repositories {
     mavenCentral()
