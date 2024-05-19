@@ -1,5 +1,3 @@
-import org.graalvm.buildtools.gradle.tasks.MetadataCopyTask
-
 val shade: Configuration by configurations.creating
 
 plugins {
@@ -11,7 +9,7 @@ plugins {
 }
 
 group = "ru.meproject"
-version = "1.0.0-RC.8"
+version = "1.0.0-RC.9"
 
 repositories {
     mavenCentral()
