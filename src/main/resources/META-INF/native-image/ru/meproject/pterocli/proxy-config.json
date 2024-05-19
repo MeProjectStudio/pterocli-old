@@ -1,0 +1,8 @@
+[
+  {
+    "interfaces":[]
+  },
+  {
+    "interfaces":["com.github.ajalt.mordant.internal.jna.WinKernel32Lib"]
+  }
+]

@@ -11,7 +11,7 @@ plugins {
 }
 
 group = "ru.meproject"
-version = "1.0.0-RC.7"
+version = "1.0.0-RC.8"
 
 repositories {
     mavenCentral()
@@ -67,8 +67,10 @@ graalvmNative {
         enabled = true
     }
     agent {
+        enabled = true
         metadataCopy {
-            outputDirectories.add("src/main/resources/META-INF/native-image")
+            inputTaskNames.add("test")
+            outputDirectories.add("src/main/resources/META-INF/native-image/ru/meproject/pterocli")
             mergeWithExisting = true
         }
     }
