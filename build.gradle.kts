@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "ru.meproject"
-version = "1.0.0-RC.10"
+version = "1.0.0-RC.11"
 
 repositories {
     mavenCentral()
@@ -75,13 +75,6 @@ graalvmNative {
     binaries {
         named("main") {
             mainClass = "ru.meproject.pterocli.PterocliKt"
-        }
-        all {
-            javaLauncher.set(javaToolchains.launcherFor {
-                // Compile with native-image from GraalVM for JDK21
-                languageVersion.set(JavaLanguageVersion.of(21))
-                vendor.set(JvmVendorSpec.GRAAL_VM)
-            })
         }
     }
 }
