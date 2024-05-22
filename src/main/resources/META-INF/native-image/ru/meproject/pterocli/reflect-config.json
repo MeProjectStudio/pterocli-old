@@ -15,6 +15,10 @@
   "name":"com.android.org.conscrypt.SSLParametersImpl"
 },
 {
+  "name":"com.github.ajalt.mordant.internal.jna.PosixLibC$winsize",
+  "allDeclaredFields":true
+},
+{
   "name":"com.github.ajalt.mordant.internal.jna.WinKernel32Lib$CONSOLE_SCREEN_BUFFER_INFO",
   "allDeclaredFields":true
 },
@@ -276,6 +280,10 @@
 {
   "name":"sun.security.provider.DSA$SHA256withDSA",
   "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"sun.security.provider.NativePRNG",
+  "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"<init>","parameterTypes":["java.security.SecureRandomParameters"] }]
 },
 {
   "name":"sun.security.provider.SHA",

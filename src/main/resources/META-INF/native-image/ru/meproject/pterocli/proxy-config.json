@@ -3,6 +3,9 @@
     "interfaces":[]
   },
   {
+    "interfaces":["com.github.ajalt.mordant.internal.jna.PosixLibC"]
+  },
+  {
     "interfaces":["com.github.ajalt.mordant.internal.jna.WinKernel32Lib"]
   }
 ]

@@ -5,7 +5,7 @@ plugins {
     application
     kotlin("jvm") version "1.9.23"
     kotlin("plugin.serialization") version "1.9.23"
-    id("org.graalvm.buildtools.native") version "0.10.1"
+    id("org.graalvm.buildtools.native") version "0.10.2"
 }
 
 group = "ru.meproject"
@@ -75,6 +75,13 @@ graalvmNative {
     binaries {
         named("main") {
             mainClass = "ru.meproject.pterocli.PterocliKt"
+        }
+        all {
+            javaLauncher.set(javaToolchains.launcherFor {
+                // Compile with native-image from GraalVM for JDK21
+                languageVersion.set(JavaLanguageVersion.of(21))
+                vendor.set(JvmVendorSpec.GRAAL_VM)
+            })
         }
     }
 }
