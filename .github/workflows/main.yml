@@ -35,9 +35,9 @@ jobs:
           ./gradlew nativeCompile
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: pteroctl-${{ matrix.os }}
+          name: pterocli-${{ matrix.os }}
           path: |
             build/native/nativeCompile/pterocli
             build/native/nativeCompile/pterocli.exe
