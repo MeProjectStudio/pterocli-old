@@ -78,13 +78,8 @@ graalvmNative {
     binaries {
         named("main") {
             mainClass = "ru.meproject.pterocli.PterocliKt"
-            buildArgs.addAll("--enable-sbom", "--strict-image-heap")
-            runtimeArgs.addAll("-Xmx256M")
-            if (isWindows()) {
-                buildArgs.addAll(
-                    "--initialize-at-build-time=com.github.ajalt.mordant.internal.nativeimage.NativeImageWin32MppImpls",
-                )
-            }
+            buildArgs.addAll("--enable-sbom")
+            runtimeArgs.addAll("-Xmx512M")
         }
     }
 }
