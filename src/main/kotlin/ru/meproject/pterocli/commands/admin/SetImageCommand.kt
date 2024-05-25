@@ -14,7 +14,7 @@ import ru.meproject.pterocli.options.ConfirmationSilencer
 
 class SetImageCommand: CliktCommand(
     name = "setimage",
-    help = "Updates docker image to be used for a server"
+    help = "update docker image on a server"
 ) {
     private val api by requireObject<PteroApplication>()
     private val servers by AdminServerIds()

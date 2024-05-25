@@ -1,3 +1,5 @@
+import java.io.ByteArrayOutputStream
+
 val shade: Configuration by configurations.creating
 
 plugins {
@@ -9,7 +11,7 @@ plugins {
 }
 
 group = "ru.meproject"
-version = "1.0.0-RC.15"
+version = "1.0.0"
 
 repositories {
     mavenCentral()
@@ -72,9 +74,45 @@ graalvmNative {
             mergeWithExisting = true
         }
     }
+
     binaries {
         named("main") {
             mainClass = "ru.meproject.pterocli.PterocliKt"
+            buildArgs.addAll("--enable-sbom", "--strict-image-heap")
+            runtimeArgs.addAll("-Xmx256M")
+            if (isWindows()) {
+                buildArgs.addAll(
+                    "--initialize-at-build-time=com.github.ajalt.mordant.internal.nativeimage.NativeImageWin32MppImpls",
+                )
+            }
         }
     }
 }
+
+fun isWindows(): Boolean = System.getProperty("os.name").lowercase().contains("win")
+
+fun gitShortRev(): String {
+    val outputStream = ByteArrayOutputStream()
+    exec {
+        if (isWindows()) {
+            commandLine("cmd", "/c", "git rev-parse --short HEAD")
+        } else {
+            commandLine("bash", "-c", "git rev-parse --short HEAD")
+        }
+        standardOutput = outputStream
+    }
+    return outputStream.toString().trim()
+}
+
+tasks.register<Copy>("generateTemplates") {
+    inputs.properties("version" to version, "gitRev" to gitShortRev())
+    from(file("/src/main/templates"))
+    into(layout.buildDirectory.dir("generated/sources/templates"))
+    expand("version" to version, "gitRev" to gitShortRev())
+}
+
+sourceSets.main {
+    java.srcDir(tasks.named("generateTemplates").map { it.outputs.files })
+}
+
+

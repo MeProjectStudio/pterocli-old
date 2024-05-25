@@ -8,7 +8,7 @@ import ru.meproject.pterocli.options.AdminServerIds
 
 class GetImageCommand: CliktCommand(
     name = "getimage",
-    help = "Retrieves current docker image used by a server"
+    help = "retrieves docker image on a server"
 ) {
     private val api by requireObject<PteroApplication>()
     private val servers by AdminServerIds()

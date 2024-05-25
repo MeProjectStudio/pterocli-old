@@ -8,5 +8,5 @@ import com.github.ajalt.clikt.parameters.options.option
 class ConfirmationSilencer : OptionGroup() {
     val shouldBeSilent by option("-y")
         .flag(default = false)
-        .help("This flag skips confirmation for destructive admin actions")
+        .help("Skips confirmation for destructive admin actions")
 }

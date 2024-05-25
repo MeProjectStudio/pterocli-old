@@ -12,7 +12,7 @@ import ru.meproject.pterocli.commands.client.files.FilesParentCommand.Companion.
 
 class DownloadFileCommand: CliktCommand(
     name = "download",
-    help = "Download remote file from a single server (only files, no support for directories)"
+    help = "download remote file from a single server (only files, no support for directories)"
 ) {
     private val api by requireObject<PteroClient>()
     private val server by option("-s","--server").required().help("Can only take single server as argument")

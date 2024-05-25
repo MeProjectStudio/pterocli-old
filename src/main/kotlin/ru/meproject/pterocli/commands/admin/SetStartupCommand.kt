@@ -14,7 +14,7 @@ import ru.meproject.pterocli.options.ConfirmationSilencer
 
 class SetStartupCommand: CliktCommand(
     name = "setstartup",
-    help = "Update startup command on a server"
+    help = "update startup command on a server"
 ) {
     private val api by requireObject<PteroApplication>()
     private val servers by AdminServerIds()

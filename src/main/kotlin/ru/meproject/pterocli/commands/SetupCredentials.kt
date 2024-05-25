@@ -11,7 +11,7 @@ import ru.meproject.pterocli.CredentialsStore
 
 class SetupCredentials: CliktCommand(
     name = "setupcredentials",
-    help = "This command sets up credentials file that would be used by default"
+    help = "set up credentials file that would be used by default"
 ) {
 
     private val panelUrl: String by option("--panel-url").required()

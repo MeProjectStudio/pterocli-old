@@ -4,7 +4,7 @@ import com.github.ajalt.clikt.core.CliktCommand
 
 class FilesParentCommand: CliktCommand(
     name = "files",
-    help = "Commands that perform actions on filesystem of a server"
+    help = "perform actions on filesystem of a server"
 ) {
 
     override fun run() {

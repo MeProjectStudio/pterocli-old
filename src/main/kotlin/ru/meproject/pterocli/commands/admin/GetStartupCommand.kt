@@ -8,7 +8,7 @@ import ru.meproject.pterocli.options.AdminServerIds
 
 class GetStartupCommand: CliktCommand(
     name = "getstartup",
-    help = "Retrieves current startup command by a server"
+    help = "retrieves current startup command on a server"
 ) {
     private val api by requireObject<PteroApplication>()
     private val servers by AdminServerIds()

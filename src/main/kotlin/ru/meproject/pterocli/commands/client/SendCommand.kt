@@ -10,7 +10,7 @@ import ru.meproject.pterocli.options.ServerIds
 
 class SendCommand: CliktCommand(
     name= "sendcommand",
-    help = "Sends arbitrary console command to server"
+    help = "send arbitrary console command to a server"
 ) {
     private val api by requireObject<PteroClient>()
     private val servers by ServerIds()

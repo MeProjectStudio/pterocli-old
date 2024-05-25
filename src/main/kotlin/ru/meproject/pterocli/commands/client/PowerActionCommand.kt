@@ -12,7 +12,7 @@ import ru.meproject.pterocli.options.ServerIds
 
 class PowerActionCommand : CliktCommand(
     name = "power",
-    help = "Sends PowerAction to specified servers"
+    help = "send Power Action to a server"
 ) {
     private val api by requireObject<PteroClient>()
 
