@@ -12,8 +12,7 @@ object CredentialsStore {
 
     fun saveCredentials(credentials: Credentials) {
         val json = Json.encodeToString(credentials)
-        val base64 = Base64.getEncoder().encodeToString(json.toByteArray())
-        File(CREDENTIALS_FILE_PATH).writeText(base64)
+        File(CREDENTIALS_FILE_PATH).writeText(json)
     }
 
     fun loadCredentials(): Credentials {
@@ -21,8 +20,7 @@ object CredentialsStore {
             throw PrintMessage("No credentials file found", statusCode = 0)
         }
 
-        val base64 = File(CREDENTIALS_FILE_PATH).readText()
-        val json = String(Base64.getDecoder().decode(base64))
+        val json = File(CREDENTIALS_FILE_PATH).readText()
         return Json.decodeFromString<Credentials>(json)
     }
 }
