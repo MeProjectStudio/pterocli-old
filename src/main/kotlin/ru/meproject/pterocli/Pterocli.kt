@@ -12,6 +12,7 @@ import ru.meproject.pterocli.commands.admin.SetImageCommand
 import ru.meproject.pterocli.commands.admin.SetStartupCommand
 import ru.meproject.pterocli.commands.client.PowerActionCommand
 import ru.meproject.pterocli.commands.client.SendCommand
+import ru.meproject.pterocli.commands.client.backups.CreateBackupCommand
 import ru.meproject.pterocli.commands.client.files.DownloadFileCommand
 import ru.meproject.pterocli.commands.client.files.FilesParentCommand
 import ru.meproject.pterocli.commands.client.files.RemoveFileCommand
@@ -23,24 +24,22 @@ fun main(args: Array<String>) = Pterocli()
     .subcommands(
         VersionCommand(),
         SetupCredentials(),
-        ClientParentCommand()
-            .subcommands(
-                PowerActionCommand(),
-                SendCommand(),
-                FilesParentCommand()
-                    .subcommands(
-                        DownloadFileCommand(),
-                        RemoveFileCommand(),
-                        UploadFileCommand()
-                    )
-            ),
-        ApplicationParentCommand()
-            .subcommands(
-                GetStartupCommand(),
-                SetStartupCommand(),
-                GetImageCommand(),
-                SetImageCommand()
+        ClientParentCommand().subcommands(
+            PowerActionCommand(),
+            SendCommand(),
+            CreateBackupCommand(),
+            FilesParentCommand().subcommands(
+                DownloadFileCommand(),
+                RemoveFileCommand(),
+                UploadFileCommand()
             )
+        ),
+        ApplicationParentCommand().subcommands(
+            GetStartupCommand(),
+            SetStartupCommand(),
+            GetImageCommand(),
+            SetImageCommand()
+        )
     )
     .main(args)
 
