@@ -11,7 +11,7 @@ plugins {
 }
 
 group = "ru.meproject"
-version = "1.0.0-RC.16"
+version = "1.0.0-RC.17"
 
 repositories {
     mavenCentral()
@@ -108,6 +108,10 @@ tasks.register<Copy>("generateTemplates") {
 
 sourceSets.main {
     java.srcDir(tasks.named("generateTemplates").map { it.outputs.files })
+}
+
+tasks.compileKotlin {
+    dependsOn(tasks.named("generateTemplates"))
 }
 
 
