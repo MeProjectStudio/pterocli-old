@@ -11,7 +11,7 @@ plugins {
 }
 
 group = "ru.meproject"
-version = "1.0.0-RC.17"
+version = "1.0.0-RC.18"
 
 repositories {
     mavenCentral()
@@ -101,7 +101,7 @@ fun gitShortRev(): String {
 
 tasks.register<Copy>("generateTemplates") {
     inputs.properties("version" to version, "gitRev" to gitShortRev())
-    from(file("/src/main/templates"))
+    from(file("src/main/templates"))
     into(layout.buildDirectory.dir("generated/sources/templates"))
     expand("version" to version, "gitRev" to gitShortRev())
 }
