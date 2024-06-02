@@ -11,7 +11,7 @@ plugins {
 }
 
 group = "ru.meproject"
-version = "1.0.0-RC.18"
+version = "1.0.0-RC.19"
 
 repositories {
     mavenCentral()
@@ -78,7 +78,7 @@ graalvmNative {
     binaries {
         named("main") {
             mainClass = "ru.meproject.pterocli.PterocliKt"
-            buildArgs.addAll("--enable-sbom")
+            buildArgs.addAll("--enable-sbom", "-H:+AddAllCharsets")
             runtimeArgs.addAll("-Xmx512M")
         }
     }
